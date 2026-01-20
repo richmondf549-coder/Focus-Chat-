@@ -1,37 +1,62 @@
-const chat = document.getElementById("chat");
-const input = document.getElementById("input");
-const send = document.getElementById("send");
+const chatBox = document.getElementById("chatBox");
+const input = document.getElementById("messageInput");
+const sendBtn = document.getElementById("sendBtn");
+const voiceBtn = document.getElementById("voiceBtn");
+const focusToggle = document.getElementById("focusToggle");
 
-let messages = JSON.parse(localStorage.getItem("focusChat")) || [];
+let focusMode = false;
 
-messages.forEach(m => addMessage(m.text, m.type, m.time));
-
-function addMessage(text, type, time = new Date().toLocaleTimeString([], {
-  hour: '2-digit', minute: '2-digit'
-})) {
-  const msg = document.createElement("div");
-  msg.className = `message ${type}`;
-  msg.innerHTML = `
-    ${text}
-    <div class="time">${time} ${type === "sent" ? "✔✔" : ""}</div>
-  `;
-  chat.appendChild(msg);
-  chat.scrollTop = chat.scrollHeight;
-
-  messages.push({ text, type, time });
-  localStorage.setItem("focusChat", JSON.stringify(messages));
+// Lightweight "encryption" simulation
+function encrypt(text) {
+  return btoa(text);
 }
 
-send.onclick = () => {
-  if (!input.value.trim()) return;
-  addMessage(input.value, "sent");
-  input.value = "";
+function decrypt(text) {
+  return atob(text);
+}
 
-  setTimeout(() => {
-    addMessage("Received. Thanks for sharing.", "received");
-  }, 900);
+function addMessage(text, type) {
+  const div = document.createElement("div");
+  div.className = `message ${type}`;
+  div.textContent = decrypt(text);
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Send text
+sendBtn.onclick = () => {
+  if (!input.value.trim()) return;
+  const encrypted = encrypt(input.value);
+  localStorage.setItem(Date.now(), encrypted);
+  addMessage(encrypted, "sent");
+  input.value = "";
 };
 
-input.addEventListener("keydown", e => {
-  if (e.key === "Enter") send.click();
-});
+// Voice note (low bitrate)
+voiceBtn.onclick = async () => {
+  if (!navigator.mediaDevices) {
+    alert("Voice not supported");
+    return;
+  }
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+
+  recorder.start();
+  setTimeout(() => recorder.stop(), 3000);
+
+  recorder.ondataavailable = e => {
+    if (!focusMode) {
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.src = URL.createObjectURL(e.data);
+      chatBox.appendChild(audio);
+    }
+  };
+};
+
+// Focus Mode
+focusToggle.onclick = () => {
+  focusMode = !focusMode;
+  focusToggle.textContent = focusMode ? "Focus ON" : "Focus Mode";
+};
+

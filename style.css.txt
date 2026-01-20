@@ -1,0 +1,123 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  height: 100vh;
+}
+
+/* APP */
+.app {
+  max-width: 480px;
+  height: 100vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  background: url("https://www.transparenttextures.com/patterns/diamond-upholstery.png"),
+              linear-gradient(#efeae2, #efeae2);
+}
+
+/* HEADER */
+.header {
+  background: #075e54;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.profile h2 {
+  font-size: 16px;
+}
+
+.profile span {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.icons span {
+  margin-left: 12px;
+  font-size: 18px;
+}
+
+/* CHAT */
+.chat {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* MESSAGES */
+.message {
+  max-width: 75%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  position: relative;
+}
+
+.sent {
+  background: #dcf8c6;
+  align-self: flex-end;
+}
+
+.received {
+  background: #ffffff;
+  align-self: flex-start;
+}
+
+.time {
+  font-size: 10px;
+  opacity: 0.6;
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* INPUT */
+.input-area {
+  display: flex;
+  padding: 10px;
+  background: #f0f0f0;
+  gap: 8px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+}
+
+.input-area input:focus {
+  outline: none;
+}
+
+.input-area button {
+  background: #25D366;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: white;
+  font-size: 18px;
+}

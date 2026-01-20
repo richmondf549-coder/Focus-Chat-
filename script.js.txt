@@ -1,0 +1,37 @@
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+const send = document.getElementById("send");
+
+let messages = JSON.parse(localStorage.getItem("focusChat")) || [];
+
+messages.forEach(m => addMessage(m.text, m.type, m.time));
+
+function addMessage(text, type, time = new Date().toLocaleTimeString([], {
+  hour: '2-digit', minute: '2-digit'
+})) {
+  const msg = document.createElement("div");
+  msg.className = `message ${type}`;
+  msg.innerHTML = `
+    ${text}
+    <div class="time">${time} ${type === "sent" ? "✔✔" : ""}</div>
+  `;
+  chat.appendChild(msg);
+  chat.scrollTop = chat.scrollHeight;
+
+  messages.push({ text, type, time });
+  localStorage.setItem("focusChat", JSON.stringify(messages));
+}
+
+send.onclick = () => {
+  if (!input.value.trim()) return;
+  addMessage(input.value, "sent");
+  input.value = "";
+
+  setTimeout(() => {
+    addMessage("Received. Thanks for sharing.", "received");
+  }, 900);
+};
+
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter") send.click();
+});

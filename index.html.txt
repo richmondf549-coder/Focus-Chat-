@@ -8,35 +8,29 @@
 </head>
 <body>
 
-  <div class="app">
+<div class="app">
+  <header>
+    <h2>Focus Chat</h2>
+    <button id="focusToggle">Focus Mode</button>
+  </header>
 
-    <!-- HEADER -->
-    <header class="header">
-      <div class="profile">
-        <img src="https://i.pravatar.cc/100" alt="avatar">
-        <div>
-          <h2>Focus Chat</h2>
-          <span id="status">last seen today</span>
-        </div>
-      </div>
-      <div class="icons">
-        <span>📞</span>
-        <span>📎</span>
-        <span>⋮</span>
-      </div>
-    </header>
+  <main id="chatBox"></main>
 
-    <!-- CHAT -->
-    <main id="chat" class="chat"></main>
+  <footer>
+    <input type="text" id="messageInput" placeholder="Type a message…" />
+    <button id="sendBtn">➤</button>
+    <button id="voiceBtn">🎤</button>
+  </footer>
+</div>
 
-    <!-- INPUT -->
-    <footer class="input-area">
-      <input id="input" placeholder="Type a message"/>
-      <button id="send">➤</button>
-    </footer>
+<section class="policy">
+  <h4>Google Terms & Policies</h4>
+  <a href="https://policies.google.com/terms" target="_blank">Google Terms of Service</a>
+  <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>
+  <a href="https://policies.google.com/technologies/cookies" target="_blank">Cookies Policy</a>
+</section>
 
-  </div>
-
-  <script src="script.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
+
